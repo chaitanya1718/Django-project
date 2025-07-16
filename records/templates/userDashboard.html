@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+   
+
+    .card {
+        background-color: rgba(240, 248, 255, 0.5);
+        
+
+    }
+    .profile{
+        background-color: #06202B;
+        color:white;
+    }
+
+</style>
+
+
+<header>
+   <h3>Cipher Ems</h3>
+   <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">←Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+  
+
+    <div class="d-flex justify-content-start flex-wrap mt-4">
+
+        <div class="card col-sm-6 shadow p-4 me-4 profile">
+            <h3 class="mb-4 text-warning">My Profile</h3>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bolder">Name:</div>
+                <div class="col-sm-8">{{ employee.name }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bold">Email:</div>
+                <div class="col-sm-8">{{ contact.email }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bold">Mobile:</div>
+                <div class="col-sm-8">{{ contact.mobile }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bold">Department:</div>
+                <div class="col-sm-8">{{ employee.department.name }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bold">Role:</div>
+                <div class="col-sm-8">{{ employee.role.name }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4 font-weight-bold">Date Joined:</div>
+                <div class="col-sm-8">{{ employee.joining_date }}</div>
+            </div>
+        </div>
+
+        <div class="col-sm-5">
+            <h4 class="mb-3 text-dark">Team Members in {{ employee.department.name }}</h4>
+
+            {% for member in members %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ member.name }}</h5>
+                    <p class="card-text">{{ member.role.name }}</p>
+                    <p class="card-text">{{ member.contact.email }}</p>
+                    <a href="mailto:{{ member.contact.email }}" class="btn btn-outline-success">Contact</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No other members in your department.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
