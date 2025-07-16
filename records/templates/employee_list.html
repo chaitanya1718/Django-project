@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<header>
+   <h3>Cipher Ems</h3>
+    <nav>
+        <a href="{% url 'admin_dashboard' %}" class="custom-hover btn btn-sm text-white">← Dashboard</a>
+
+    </nav>
+</header>
+
+<div class="container mt-4">
+    <div>
+      
+        <h2 class="mt-3 mb-4">Active Employees</h2>
+
+        <!-- Search, Filter, Sort Form -->
+        <form method="get" class="row g-3 mb-4">
+            <div class="col-md-3">
+                <input type="text" name="q" class="form-control" placeholder="Search by Name..."
+                    value="{{ request.GET.q }}">
+            </div>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-border  w-100">Go</button>
+            </div>
+
+            <div class="col-md-2">
+               <select name="department" class="form-select">
+    <option value="">All Departments</option>
+    {% for dept in departments %}
+        <option value="{{ dept.name }}" {% if request.GET.department == dept.name %}selected{% endif %}>
+            {{ dept.name }}
+        </option>
+    {% endfor %}
+</select>
+            </div>
+
+            <div class="col-md-2">
+                <select name="role" class="form-select">
+                    <option value="">All Roles</option>
+                    {% for role in roles %}
+                    <option value="{{ role.name }}" {% if request.GET.role == role.name %}selected{% endif %}>{{role.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <select name="sort" class="form-select">
+                    <option value="">Sort By</option>
+                    <option value="joining_date" {% if request.GET.sort == "joining_date" %}selected{% endif %}>Joining
+                        Date</option>
+                    <option value="department" {% if request.GET.sort == "department" %}selected{% endif %}>Department
+                    </option>
+                    <option value="role" {% if request.GET.sort == "role" %}selected{% endif %}>Role</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-color text-white w-100">Apply</button>
+            </div>
+        </form>
+
+        <!-- Employee Table -->
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Dept.</th>
+                    <th>Role</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-info">
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp.id }}</td>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.department.name }}</td>
+                    <td>{{ emp.role.name|default:"N/A" }}</td>
+                    <td class="d-flex justify-content-around">
+                        {{ emp.contact.mobile }}
+                        <a href="mailto:{{ emp.contact.email }}" class="btn btn-outline-success btn-sm">Contact</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete_employee' emp.id %}" class="btn btn-sm btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No employees found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
