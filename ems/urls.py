@@ -34,7 +34,7 @@ urlpatterns = [
     # Employee paths
     path('empDashboard/', views.userDashboard, name='user_dashboard'),
     path('register/', views.register, name='register'),
-    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('', views.CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
 ]

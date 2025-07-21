@@ -198,10 +198,9 @@ def userDashboard(request):
     employee = get_object_or_404(Employee, user=request.user)
     contact = get_object_or_404(Contact, employee=employee)
 
-    # Get all employees in the same department (excluding the current user)
     members = Employee.objects.filter(department=employee.department).exclude(id=employee.id)
     
-    # Preload contact info and attach to each member
+
     contact_map = {c.employee.id: c for c in Contact.objects.filter(employee__in=members)}
     for member in members:
         member.contact = contact_map.get(member.id)

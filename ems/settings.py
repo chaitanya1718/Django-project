@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import dotenv
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # keep this first
 ]
@@ -27,8 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(sf*jke_oo_o6ny*w!9s99v5%&f4!f^_9lr+6x2s+ft8a$soyz'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
