@@ -1,3 +1,5 @@
 pymupdf
 django
 gunicorn
+daphne
+channels
