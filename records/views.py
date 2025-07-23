@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 # # Create your views here.
 
-from .models import Employee, Department, Role, Contact
+from .models import ChatMessage, Employee, Department, Role, Contact
 from .forms import EmployeeForm, ContactForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import UserCreationForm
@@ -209,4 +209,17 @@ def userDashboard(request):
         'employee': employee,
         'contact': contact,
         'members': members,
+    })
+
+
+@login_required
+def chat_view(request, username):
+    other_user = User.objects.get(username=username)
+    messages = ChatMessage.objects.filter(
+        sender__in=[request.user, other_user],
+        receiver__in=[request.user, other_user]
+    ).order_by("timestamp")
+    return render(request, "chat.html", {
+        "other_user": other_user,
+        "messages": messages
     })

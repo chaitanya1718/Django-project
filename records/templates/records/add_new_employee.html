@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header>
+     <h3>Cipher Ems</h3>
+    <nav>
+        <a href="{% url 'admin_dashboard' %}" class="custom-hover btn btn-sm text-white">← Dashboard</a>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Add New Employee</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" class="border-dark p-4 border rounded shadow-sm">
+                {% csrf_token %}
+
+                <h5>User Credentials</h5>
+                <div class="mb-3">
+                    {{ user_form.username.label_tag }}
+                    {{ user_form.username }}
+                    {{ user_form.username.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ user_form.password1.label_tag }}
+                    {{ user_form.password1 }}
+                    {{ user_form.password1.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ user_form.password2.label_tag }}
+                    {{ user_form.password2 }}
+                    {{ user_form.password2.errors }}
+                </div>
+
+                <hr>
+                <h5>Employee Details</h5>
+                <div class="mb-3">
+                    {{ employee_form.name.label_tag }}
+                    {{ employee_form.name }}
+                    {{ employee_form.name.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ employee_form.department.label_tag }}
+                    {{ employee_form.department }}
+                    {{ employee_form.department.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ employee_form.role.label_tag }}
+                    {{ employee_form.role }}
+                    {{ employee_form.role.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ employee_form.joining_date.label_tag }}
+                    {{ employee_form.joining_date }}
+                    {{ employee_form.joining_date.errors }}
+                </div>
+
+                <hr>
+                <h5>Contact Details</h5>
+                <div class="mb-3">
+                    {{ contact_form.email.label_tag }}
+                    {{ contact_form.email }}
+                    {{ contact_form.email.errors }}
+                </div>
+                <div class="mb-3">
+                    {{ contact_form.mobile.label_tag }}
+                    {{ contact_form.mobile }}
+                    {{ contact_form.mobile.errors }}
+                </div>
+
+                <button type="submit" class="btn btn-color mx-auto">Add Employee</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,10 +1,12 @@
-# Sensitive files
-.env
-
-# Python junk
 __pycache__/
-*.pyc
-
-# Optional
+*.py[cod]
 db.sqlite3
+.env
+*.log
+*.pot
+*.pyc
+*.pyo
+venv/
+env/
+staticfiles/
 media/

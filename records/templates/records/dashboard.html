@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
+
+    .card {
+        background-color: rgb(6, 32, 43);
+        color: white;
+    }
+</style>
+
+<header>
+    <h3>Cipher Ems</h3>
+
+    <div class="logout">
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">←Logout</button>
+        </form>
+    </div>
+
+</header>
+
+<h2 class="mb-5 text-center mt-5">Welcome Back ! <b class="text-dark">Chaitanya</b></h2>
+
+<div class="container">
+
+
+    <div class="d-flex justify-content-around">
+
+
+
+        <div class="card border-info" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-info">View Employees</h5>
+                <p class="card-text">View, Edit, Remove Active Employees/users.</p>
+                <a href="{% url 'employee_list' %}" class="btn btn-outline-info">Active Employees</a>
+            </div>
+        </div>
+
+        <div class="card border-success" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Add Employee</h5>
+                <p class="card-text">Follow the below button to add new employee/user.</p>
+                <a href="{% url 'add_employee'%}" class="btn btn-outline-warning">Add Employee</a>
+            </div>
+        </div>
+
+        <div class="card border-dark" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-light">Past Users</h5>
+                <p class="card-text">Click below to view the details of past employees/users</p>
+                <a href="{% url 'past_employee_list'%}" class="btn btn-outline-light">Past Employees</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

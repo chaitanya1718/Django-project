@@ -2,29 +2,31 @@
 
 {% block content %}
 <style>
+   
+
     .card {
         background-color: rgba(240, 248, 255, 0.5);
-
+        
 
     }
-
-    .profile {
+    .profile{
         background-color: #06202B;
-        color: white;
+        color:white;
     }
+
 </style>
 
 
 <header>
-    <h3>Cipher Ems</h3>
-    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+   <h3>Cipher Ems</h3>
+   <form method="post" action="{% url 'logout' %}" style="display:inline;">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">←Logout</button>
     </form>
 </header>
 
 <div class="container mt-5">
-
+  
 
     <div class="d-flex justify-content-start flex-wrap mt-4">
 
@@ -66,13 +68,6 @@
                     <p class="card-text">{{ member.role.name }}</p>
                     <p class="card-text">{{ member.contact.email }}</p>
                     <a href="mailto:{{ member.contact.email }}" class="btn btn-outline-success">Contact</a>
-                    {% if member.user %}
-                    <a href="{% url 'chat' member.user.username %}" class="btn btn-sm btn-outline-info">Chat</a>
-                    {% else %}
-                    <span class="text-muted">No chat available</span>
-                    {% endif %}
-
-
                 </div>
             </div>
             {% empty %}

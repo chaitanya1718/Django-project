@@ -4,9 +4,16 @@ from django.contrib.auth.models import User
 from .models import Employee, Contact
 
 class CustomUserCreationForm(UserCreationForm):
+    security_key = forms.CharField(
+        max_length=50,
+        required=True,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Security Key','autocomplete':'off',}),
+        help_text='Enter the registration security key'
+    )
+
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2','security_key']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
         }
@@ -15,6 +22,13 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+
+    def clean_security_key(self):
+        key = self.cleaned_data.get('security_key')
+        from django.conf import settings
+        if key != settings.SECURITY_KEY_FOR_REGISTRATION:
+            raise forms.ValidationError("Invalid security key.")
+        return key
 
 class EmployeeForm(forms.ModelForm):
     class Meta:

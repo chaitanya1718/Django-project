@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header>
+    <h3>Cipher Ems</h3>
+
+    <div class="logout">
+        <form method="post" action="{% url 'user_dashboard' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="custom-hover btn btn-sm text-white">←dashboard</button>
+        </form>
+    </div>
+
+</header>
+
+
+
+<div class="container mt-4">
+    <h4>Chat with {{ other_user.username }}</h4>
+    <div id="chat-log" class="border p-3 mb-3" style="height:300px; overflow-y:auto;">
+        {% for msg in messages %}
+            <div>
+                <strong>{{ msg.sender.username }}:</strong> {{ msg.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <input id="chat-message-input" class="form-control" placeholder="Type message...">
+    <button id="chat-message-send" class="btn btn-primary mt-2">Send</button>
+</div>
+
+<script>
+  const chatSocket = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/{{ other_user.username }}/'
+  );
+
+  chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const log = document.getElementById('chat-log');
+    log.innerHTML += `<div><strong>${data.sender}:</strong> ${data.message}</div>`;
+    log.scrollTop = log.scrollHeight;
+  };
+
+  document.getElementById('chat-message-send').onclick = function() {
+    const msgInput = document.getElementById('chat-message-input');
+    const message = msgInput.value;
+    if (message) {
+      chatSocket.send(JSON.stringify({ 'message': message }));
+      msgInput.value = '';
+    }
+  };
+</script>
+{% endblock %}
