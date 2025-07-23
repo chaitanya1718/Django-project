@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'channels',
 ]
 
-INSTALLED_APPS += ['channels']
+
 
 ASGI_APPLICATION = 'ems.asgi.application'
 REDIS_URL = os.getenv('REDIS_URL')
