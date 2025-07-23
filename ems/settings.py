@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'records',
+    'channels',
 ]
 
 INSTALLED_APPS += ['channels']
