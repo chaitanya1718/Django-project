@@ -59,11 +59,14 @@ INSTALLED_APPS = [
 INSTALLED_APPS += ['channels']
 
 ASGI_APPLICATION = 'ems.asgi.application'
-
+REDIS_URL = os.getenv('REDIS_URL')
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+  "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
 }
 
 
