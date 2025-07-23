@@ -4,3 +4,4 @@ gunicorn
 daphne
 channels
 python-dotenv
+uvicorn[standard]
